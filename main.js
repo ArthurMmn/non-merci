@@ -1,24 +1,32 @@
-import './style.css'
-import javascriptLogo from './javascript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.js'
+import "./style.css";
+import quoteFiles from "./quotes.txt?raw";
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`
+const quotes = quoteFiles.trim().split("\n");
+let currentQuoteIndex = null;
 
-setupCounter(document.querySelector('#counter'))
+const randomQuoteIndex = () => {
+  let index = Math.floor(Math.random() * quotes.length);
+  while (index === currentQuoteIndex) {
+    index = Math.floor(Math.random() * quotes.length);
+  }
+  currentQuoteIndex = index;
+  return index;
+};
+
+const speak = () => {
+  const text = document.querySelector("#quote").innerHTML;
+  speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  speechSynthesis.speak(utterance);
+};
+
+const switchQuote = () => {
+  document.querySelector("#quote").innerHTML =
+    quotes[randomQuoteIndex(currentQuoteIndex)];
+  speak();
+};
+
+document.querySelector("#switch-quote").addEventListener("click", switchQuote);
+document.querySelector("#quote").addEventListener("click", speak);
+
+switchQuote();
