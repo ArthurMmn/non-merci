@@ -36,12 +36,23 @@ body {
   flex-grow: 1;
   color: white;
   font-weight: bold;
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
 }
 
-#switch-quote {
-  font-size: 2rem;
-  text-align: center;
+#buttons {
   margin: auto;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+#switch-quote, #share {
+  position: relative;
+  margin: 0 1rem;
+  font-size: 3rem;
   background: none;
   border: none;
 }
@@ -53,8 +64,6 @@ footer {
   color: white;
   width: 80%;
   gap: 5px;
-  position: absolute;
-  bottom: 10px;
 }
 
 footer img {
